@@ -21,12 +21,12 @@ ROOM_ID_LEN = 5
 ID_RANGE = string.digits
 
 words_500 = Corpus('corpora/words-500.txt', wsgi=False)
-temp_path = os.path.abspath('./data')
-
+temp_path = os.getcwd()
+db_address = os.path.join(temp_path, 'WhoIsTheSpy.sqlite')
 if not os.path.exists(temp_path):
     os.mkdir(temp_path)
 
-db = Database(os.path.join(temp_path, 'WhoIsTheSpy.sqlite'))
+db = Database(db_address)
 
 users = Table('users', db)
 rooms = Table('rooms', db)
@@ -48,7 +48,7 @@ except Exception:
 
 app = Flask(__name__)
 SESSION_TYPE = 'filesystem'
-SESSION_FILE_DIR = temp_path
+# SESSION_FILE_DIR = temp_path
 app.config.from_object(__name__)
 Session(app)
 
@@ -179,3 +179,6 @@ if __name__ == "__main__":
         app.run('0.0.0.0')
     finally:
         db.close()
+        if(os.path.exists(db_address)):
+            os.remove(db_address)
+        # rmtree(temp_path)

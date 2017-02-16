@@ -4,5 +4,3 @@
 db/
 
 flask_session/
-
-data/

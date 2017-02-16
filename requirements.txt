@@ -1,3 +1,4 @@
 PyDbLite
 Flask
 flask-session
+gunicorn
