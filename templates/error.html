@@ -1,0 +1,29 @@
+{% include 'header.html' %}
+
+<script language="javascript">
+
+    function home() {
+        location.href = "/"
+    }
+
+    function refresh() {
+        location.reload()
+    }
+
+</script>
+
+<body>
+<div class="wrapper">
+    <div class="subtitle">谁是卧底</div>
+	<br>
+    <div class="item">错误：{{ msg }}</div>
+    <br>
+    <div class="item">请尝试稍后<a href="javascript:refresh()">刷新</a>页面。</div>
+    <br>
+    <input type="submit" class="btn" value="主页" onclick="home()"/>
+    <br>
+    <div class="author">作者：<a href="http://www.zhengyi.one">Zhengyi</a></div>
+</div>
+</body>
+
+{% include 'footer.html' %}

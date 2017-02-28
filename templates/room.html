@@ -1,0 +1,60 @@
+{% include 'header.html' %}
+
+<script language="javascript">
+
+    function home() {
+        location.href = "/"
+    }
+
+    function vote() {
+        var num = prompt("请输入选举出的卧底的编号", "");
+        if (num) {
+            location.href = "/vote/" + num
+        }
+    }
+
+    function change() {
+        location.href = "/change/"
+        alert("更换成功，请要求其他玩家刷新页面。")
+    }
+
+    function refresh() {
+        location.reload()
+    }
+
+</script>
+
+<body>
+<div class="wrapper">
+
+    <div class="subtitle">谁是卧底</div>
+    <br>
+    <div class="item">房间代码:{{ room_id }}</div>
+    <br>
+    <div class="item">玩家编号:{{ user_num }}</div>
+    <br>
+    <div class="item">房间人数:{{ room_total }}</div>
+    <br>
+    <div class="item">开始玩家:{{ start }}</div>
+    <br>
+    <div class="item">你的词语:{{ word }}</div>
+    <br>
+
+    <br>
+
+    <input type="submit" class="btn" value="主页" onclick="home()"/>
+    <br>
+    <input type="submit" class="btn" value="投票" onclick="vote()"/>
+    <br>
+    <input type="submit" class="btn" value="换词" onclick="change()"/>
+    <br>
+    <input type="submit" class="btn" value="刷新" onclick="javascript:refresh()"/>
+
+
+    <br>
+    <br>
+    <div class="author">作者：<a href="http://www.zhengyi.one">Zhengyi</a></div>
+</div>
+</body>
+
+{% include 'footer.html' %}

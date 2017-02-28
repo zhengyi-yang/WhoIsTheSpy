@@ -1,0 +1,42 @@
+{% include 'header.html' %}
+
+<script language="javascript">
+
+    function create() {
+        var num = prompt("请输入游戏人数", "");
+        if (num) {
+            location.href = "/create/" + num
+        }
+    }
+
+    function join() {
+        var name = prompt("请输入房间代码", "");
+        if (name) {
+            location.href = "/room/" + name
+        }
+    }
+
+    function resume() {
+        location.href = "/room/"
+    }
+
+</script>
+
+<body>
+
+<div class="wrapper">
+    <div class="subtitle">谁是卧底</div>
+    <br>
+
+    <input type="submit" class="btn" value="创建房间" onclick="create()"/>
+    <br>
+    <input type="submit" class="btn" value="加入房间" onclick="join()"/>
+    <br>
+    <input type="submit" class="btn" value="继续游戏" onclick="resume()"/>
+    <br>
+    <br>
+    <div class="author">作者：<a href="http://www.zhengyi.one">Zhengyi</a></div>
+</div>
+</body>
+
+{% include 'footer.html' %}
