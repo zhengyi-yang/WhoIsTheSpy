@@ -8,8 +8,6 @@ from __future__ import unicode_literals
 import os
 import uuid
 import string
-from tempfile import mkdtemp
-from shutil import rmtree
 from random import sample, randint
 from time import time
 
@@ -19,10 +17,14 @@ from flask_session import Session
 
 from corpus import Corpus
 
-ROOM_ID_LEN = 4
+ROOM_ID_LEN = 5
+ID_RANGE = string.digits
 
 words_500 = Corpus('corpora/words-500.txt', wsgi=False)
-temp_path = os.path.abspath('.') # mkdtemp(prefix='WITS_')
+temp_path = os.path.abspath('./data')
+
+if not os.path.exists(temp_path):
+    os.mkdir(temp_path)
 
 db = Database(os.path.join(temp_path, 'WhoIsTheSpy.sqlite'))
 
@@ -115,7 +117,7 @@ def create(total):
 
     civ_word, spy_word = words_500.getRandom()
     while 1:
-        room_id = ''.join(sample(string.letters + string.digits, ROOM_ID_LEN))
+        room_id = ''.join(sample(ID_RANGE, ROOM_ID_LEN))
         if not rooms(room=room_id):
             break
     rooms.insert(room_id, civ_word, spy_word, randint(1, total),
@@ -172,8 +174,8 @@ def error(msg):
 
 
 if __name__ == "__main__":
-
+    
     try:
-        app.run('0.0.0.0', port=80)
+        app.run('0.0.0.0')
     finally:
         db.close()
