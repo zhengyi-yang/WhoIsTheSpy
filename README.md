@@ -5,4 +5,4 @@
 
 [Mirror](https://sswd.herokuapp.com/)
 
-[License](https://zhengyi.mit-license.org/)
+[License](https://zhengyi.mit-license.org/@2017)
