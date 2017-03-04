@@ -1,6 +1,5 @@
 .idea/
 *.pyc
 
-db/
-
 flask_session/
+*.sqlite

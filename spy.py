@@ -5,11 +5,9 @@ Created on Mon Jan 23 15:47:53 2017
 @author: Zhengyi
 """
 from __future__ import unicode_literals
-import os
 import uuid
 import string
 from random import sample, randint
-from time import time
 
 from pydblite.sqlite import Database, Table
 from flask import Flask, session, redirect, url_for, render_template
@@ -20,29 +18,30 @@ from corpus import Corpus
 ROOM_ID_LEN = 5
 ID_RANGE = string.digits
 
+MAX_NUM_OF_RECORDS = 1000
+MAX_ROOM_SIZE = 10
+
 words_500 = Corpus('corpora/words-500.txt', wsgi=False)
-db_address = os.path.join('WhoIsTheSpy.sqlite')
 
-
-db = Database(db_address)
+db = Database('WhoIsTheSpy.sqlite')
 
 users = Table('users', db)
 rooms = Table('rooms', db)
 
-users.create(('uuid', 'TEXT'), ('room', 'TEXT'),
-             ('num', 'INTEGER'), ('time', 'INTEGER'), mode='open')
+if not 'users' in db:
 
-rooms.create(('room', 'TEXT'), ('civ_word', 'TEXT'),
-             ('spy_word', 'TEXT'), ('spy_num', 'INTEGER'),
-             ('total', 'INTEGER'), ('count', 'INTEGER'),
-             ('start', 'INTEGER'),
-             ('time', 'INTEGER'), mode='open')
-
-try:
+    users.create(('uuid', 'TEXT'), ('room', 'TEXT'),
+                 ('num', 'INTEGER'))
     users.create_index('uuid')
+
+if not 'rooms' in db:
+
+    rooms.create(('room', 'TEXT'), ('civ_word', 'TEXT'),
+                 ('spy_word', 'TEXT'), ('spy_num', 'INTEGER'),
+                 ('total', 'INTEGER'), ('count', 'INTEGER'),
+                 ('start', 'INTEGER'))
     rooms.create_index('room')
-except Exception:
-    pass
+
 
 app = Flask(__name__)
 SESSION_TYPE = 'filesystem'
@@ -78,9 +77,10 @@ def enter(room_id):
         rooms.commit()
         if user_record:
             users.update(user_record[0], room=room_id,
-                         num=user_num, time=int(time()))
+                         num=user_num)
         else:
-            users.insert(uid, room_id, user_num, int(time()))
+            users.insert(uid, room_id, user_num)
+            db_clean(users)
         users.commit()
         user_record = users(uuid=uid)
 
@@ -111,6 +111,8 @@ def enter_():
 def create(total):
     if total < 3:
         return error('需要至少3人')
+    if total > MAX_ROOM_SIZE:
+        return error('房间最多容纳%d人' % MAX_ROOM_SIZE)
 
     civ_word, spy_word = words_500.getRandom()
     while 1:
@@ -118,7 +120,8 @@ def create(total):
         if not rooms(room=room_id):
             break
     rooms.insert(room_id, civ_word, spy_word, randint(1, total),
-                 total, 0, randint(1, total), int(time()))
+                 total, 0, randint(1, total))
+    db_clean(rooms)
     rooms.commit()
     url = url_for('enter', room_id=room_id)
     return redirect(url)
@@ -140,8 +143,7 @@ def change():
             rooms.update(room_record, civ_word=civ_word,
                          spy_word=spy_word,
                          spy_num=randint(1, total),
-                         start=randint(1, total),
-                         time=int(time()))
+                         start=randint(1, total))
             rooms.commit()
             url = url_for('enter', room_id=room_id)
             return redirect(url)
@@ -170,11 +172,20 @@ def error(msg):
     return render_template('error.html', msg=msg)
 
 
+def db_clean(table, delete_ratio=0.1):
+    num_of_records = len(table)
+    if num_of_records > MAX_NUM_OF_RECORDS:
+        num_of_deletes = max(int(MAX_NUM_OF_RECORDS * delete_ratio),
+                             num_of_records - MAX_NUM_OF_RECORDS)
+        for i, row in enumerate(table):
+            if i >= num_of_deletes:
+                break
+            table.delete(row)
+        table.commit()
+
 if __name__ == "__main__":
-    
+
     try:
         app.run('0.0.0.0')
     finally:
         db.close()
-        if(os.path.exists(db_address)):
-            os.remove(db_address)
