@@ -167,11 +167,12 @@ def vote(num):
 
     return error('你目前没有加入任何房间')
 
+
 @app.route('/rules/')
 def rules():
     return render_template('rules.html')
-	
-	
+
+
 def error(msg):
     return render_template('error.html', msg=msg)
 
