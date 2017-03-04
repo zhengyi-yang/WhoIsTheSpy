@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 import uuid
 import string
 from random import sample, randint
+import argparse
 
 from pydblite.sqlite import Database, Table
 from flask import Flask, session, redirect, url_for, render_template
@@ -189,8 +190,14 @@ def db_clean(table, delete_ratio=0.1):
         table.commit()
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', nargs='?', dest='interface', default='0.0.0.0',
+                        help="The interface to listen on. Default is '0.0.0.0'")
+    parser.add_argument('-p', nargs='?', dest='port', type=int, default=5000,
+                        help="The port of the webserver. Default is 5000")
+    args = parser.parse_args()
 
     try:
-        app.run('0.0.0.0')
+        app.run(args.interface,args.port)
     finally:
         db.close()
