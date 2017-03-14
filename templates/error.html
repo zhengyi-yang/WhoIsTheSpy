@@ -1,5 +1,7 @@
-{% include 'header.html' %}
+{% extends "base.html" %}
 
+
+{% block scripts %}
 <script language="javascript">
 
     function home() {
@@ -12,18 +14,20 @@
 
 </script>
 
-<body>
-<div class="wrapper">
-    <div class="subtitle">谁是卧底</div>
-    <br>
-    <div class="item">错误：{{ msg }}</div>
-    <br>
-    <div class="item">请尝试稍后<a href="javascript:refresh()">刷新</a>页面。</div>
-    <br>
-    <input type="submit" class="btn" value="主页" onclick="home()"/>
-    <br>
-    {% include 'author.html' %}
-</div>
-</body>
+{{super()}}
+{% endblock %}
 
-{% include 'footer.html' %}
+{% block content %}
+    <h1>谁是卧底</h1>
+    <br>
+    <div>错误：{{ msg }}</div>
+    <br>
+    <div>请尝试稍后<a href="javascript:refresh()">刷新</a>页面。</div>
+    <br>
+
+    <div class="btn-group-vertical btn-group-lg">
+        <button type="button" class="btn btn-primary" onclick="home()">主页</button>
+    </div>
+
+{{super()}}
+{% endblock %}

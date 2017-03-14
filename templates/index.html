@@ -1,5 +1,7 @@
-{% include 'header.html' %}
+{% extends "base.html" %}
 
+
+{% block scripts %}
 <script language="javascript">
 
     function create() {
@@ -26,23 +28,18 @@
 
 </script>
 
-<body>
+{{super()}}
+{% endblock %}
 
-<div class="wrapper">
-    <div class="subtitle">谁是卧底</div>
+{% block content %}
+	<h1>谁是卧底</h1>
     <br>
+    <div class="btn-group-vertical btn-group-lg" >
+        <button type="button" class="btn btn-primary" onclick="create()">创建房间</button>
+        <button type="button" class="btn btn-primary" onclick="join()">加入房间</button>
+        <button type="button" class="btn btn-primary" onclick="resume()">继续游戏</button>
+        <button type="button" class="btn btn-primary" onclick="rules()">使用说明</button>
+    </div>
 
-    <input type="submit" class="btn" value="创建房间" onclick="create()"/>
-    <br>
-    <input type="submit" class="btn" value="加入房间" onclick="join()"/>
-    <br>
-    <input type="submit" class="btn" value="继续游戏" onclick="resume()"/>
-    <br>
-    <input type="submit" class="btn" value="使用说明" onclick="rules()"/>
-    <br>
-    <br>
-    {% include 'author.html' %}
-</div>
-</body>
-
-{% include 'footer.html' %}
+{{super()}}
+{% endblock %}

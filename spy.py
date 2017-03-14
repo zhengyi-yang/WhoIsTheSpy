@@ -13,6 +13,7 @@ import argparse
 from pydblite.sqlite import Database, Table
 from flask import Flask, session, redirect, url_for, render_template
 from flask_session import Session
+from flask_bootstrap import Bootstrap
 
 from corpus import Corpus
 
@@ -48,6 +49,7 @@ app = Flask(__name__)
 SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
+Bootstrap(app)
 
 
 @app.route("/")

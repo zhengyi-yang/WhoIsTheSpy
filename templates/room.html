@@ -1,5 +1,7 @@
-{% include 'header.html' %}
+{% extends "base.html" %}
 
+
+{% block scripts %}
 <script language="javascript">
 
     function home() {
@@ -24,37 +26,26 @@
 
 </script>
 
-<body>
-<div class="wrapper">
-
-    <div class="subtitle">谁是卧底</div>
-
-    <br>
-    <div class="item">房间代码:{{ room_id }}</div>
-    <br>
-    <div class="item">玩家编号:{{ user_num }}</div>
-    <br>
-    <div class="item">房间人数:{{ room_total }}</div>
-    <br>
-    <div class="item">开始玩家:{{ start }}</div>
-    <br>
-    <div class="item">你的词语:{{ word }}</div>
-    <br>
-    <br>
-
-    <input type="submit" class="btn" value="主页" onclick="home()"/>
-    <br>
-    <input type="submit" class="btn" value="投票" onclick="vote()"/>
-    <br>
-    <input type="submit" class="btn" value="换词" onclick="change()"/>
-    <br>
-    <input type="submit" class="btn" value="刷新" onclick="refresh()"/>
+{{super()}}
+{% endblock %}
 
 
+{% block content %}
+    <h1>谁是卧底</h1>
     <br>
+    <div>房间代码:{{ room_id }}</div>
+    <div>玩家编号:{{ user_num }}</div>
+    <div>房间人数:{{ room_total }}</div>
+    <div>开始玩家:{{ start }}</div>
+    <div>你的词语:{{ word }}</div>
     <br>
-    {% include 'author.html' %}
-</div>
-</body>
 
-{% include 'footer.html' %}
+    <div class="btn-group-vertical btn-group-lg">
+        <button type="button" class="btn btn-primary" onclick="home()">主页</button>
+        <button type="button" class="btn btn-primary" onclick="vote()">投票</button>
+        <button type="button" class="btn btn-primary" onclick="change()">换词</button>
+        <button type="button" class="btn btn-primary" onclick="refresh()">刷新</button>
+    </div>
+
+{{super()}}
+{% endblock %}

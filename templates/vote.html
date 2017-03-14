@@ -1,5 +1,7 @@
-{% include 'header.html' %}
+{% extends "base.html" %}
 
+
+{% block scripts %}
 <script language="javascript">
 
     function back() {
@@ -8,11 +10,14 @@
 
 </script>
 
-<body>
-<div class="wrapper">
-    <div class="subtitle">谁是卧底</div>
+{{super()}}
+{% endblock %}
+
+
+{% block content %}
+    <h1>谁是卧底</h1>
     <br>
-    <div class="item">
+    <div>
         {{ user_num }}号玩家
         {% if is_spy %}
         是 卧底。平民胜利！
@@ -23,12 +28,9 @@
 
     <br>
 
-    <input type="submit" class="btn" value="返回" onclick="back()">
+    <div class="btn-group-vertical btn-group-lg">
+        <button type="button" class="btn btn-primary" onclick="back()">返回</button>
+    </div>
 
-    <br>
-    <br>
-    {% include 'author.html' %}
-</div>
-</body>
-
-{% include 'footer.html' %}
+{{super()}}
+{% endblock %}

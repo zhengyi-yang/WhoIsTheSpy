@@ -1,5 +1,7 @@
-﻿{% include 'header.html' %}
+﻿{% extends "base.html" %}
 
+
+{% block scripts %}
 <script language="javascript">
 
     function home() {
@@ -8,11 +10,14 @@
 
 </script>
 
-<body>
-<div class="wrapper">
-    <div class="subtitle">使用说明</div>
+{{super()}}
+{% endblock %}
+
+
+{% block content %}
+    <h1>使用说明</h1>
     <br>
-    <div style="font-size: 3vmin;">
+    <div>
         玩家人数：3-10人<br><br>
 
         游戏过程：<br>
@@ -31,10 +36,10 @@
     </div>
 
     <br>
-    <input type="submit" class="btn" value="主页" onclick="home()"/>
-    <br>
-    {% include 'author.html' %}
-</div>
-</body>
+    
+    <div class="btn-group-vertical btn-group-lg">
+        <button type="button" class="btn btn-primary" onclick="home()">主页</button>
+    </div>
 
-{% include 'footer.html' %}
+{{super()}}
+{% endblock %}
