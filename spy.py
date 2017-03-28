@@ -20,7 +20,8 @@ from corpus import Corpus
 ROOM_ID_LEN = 5
 ID_RANGE = string.digits
 
-MAX_NUM_OF_RECORDS = 1000
+MAX_NUM_OF_USERS = 500
+MAX_NUM_OF_ROOMS = 200
 MAX_ROOM_SIZE = 10
 
 words_500 = Corpus('corpora/words-500.txt', wsgi=False)
@@ -83,7 +84,7 @@ def enter(room_id):
                          num=user_num)
         else:
             users.insert(uid, room_id, user_num)
-            db_clean(users)
+            db_clean(users, MAX_NUM_OF_USERS)
         users.commit()
         user_record = users(uuid=uid)
 
@@ -124,7 +125,7 @@ def create(total):
             break
     rooms.insert(room_id, civ_word, spy_word, randint(1, total),
                  total, 0, randint(1, total))
-    db_clean(rooms)
+    db_clean(rooms, MAX_NUM_OF_ROOMS)
     rooms.commit()
     url = url_for('enter', room_id=room_id)
     return redirect(url)
@@ -180,16 +181,17 @@ def error(msg):
     return render_template('error.html', msg=msg)
 
 
-def db_clean(table, delete_ratio=0.1):
+def db_clean(table, max_records, delete_ratio=0.):
     num_of_records = len(table)
-    if num_of_records > MAX_NUM_OF_RECORDS:
-        num_of_deletes = max(int(MAX_NUM_OF_RECORDS * delete_ratio),
-                             num_of_records - MAX_NUM_OF_RECORDS)
+    if num_of_records > max_records:
+        num_of_deletes = max(int(max_records * delete_ratio),
+                             num_of_records - max_records)
         for i, row in enumerate(table):
             if i >= num_of_deletes:
                 break
             table.delete(row)
         table.commit()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -200,6 +202,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        app.run(args.interface,args.port)
+        app.run(args.interface, args.port)
     finally:
         db.close()
