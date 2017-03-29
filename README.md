@@ -1,7 +1,7 @@
 # 谁是卧底
 
 
-[Demo](http://zingy.link/) 
+[Demo](https://sswd2.herokuapp.com) 
 
 [Mirror](https://sswd.herokuapp.com/)
 
