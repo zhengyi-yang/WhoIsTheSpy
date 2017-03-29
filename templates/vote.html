@@ -1,36 +1,23 @@
-{% extends "base.html" %}
-
-
-{% block scripts %}
+{% extends "base.html" %} {% block scripts %}
 <script language="javascript">
-
     function back() {
         location.href = "/room/"
     }
-
 </script>
 
-{{super()}}
-{% endblock %}
-
-
-{% block content %}
+{{super()}} {% endblock %} {% block content %}
+<div>
     <h1>谁是卧底</h1>
-    <br>
-    <div>
-        {{ user_num }}号玩家
-        {% if is_spy %}
-        是 卧底。平民胜利！
-        {% else %}
-        不是 卧底。游戏继续！
-        {% endif %}
-    </div>
+</div>
+<div>
+    {{ user_num }}号玩家 {% if is_spy %} 是 卧底。平民胜利！ {% else %} 不是 卧底。游戏继续！ {% endif %}
+</div>
 
-    <br>
-
-    <div class="btn-group-vertical btn-group-lg">
+<br>
+<div class="text-center">
+    <div class="btn-group-vertical btn-group-lg" style="min-width: 90%;">
         <button type="button" class="btn btn-primary" onclick="back()">返回</button>
     </div>
+</div>
 
-{{super()}}
-{% endblock %}
+{{super()}} {% endblock %}

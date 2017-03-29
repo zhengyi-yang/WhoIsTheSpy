@@ -1,9 +1,5 @@
-{% extends "base.html" %}
-
-
-{% block scripts %}
+{% extends "base.html" %} {% block scripts %}
 <script language="javascript">
-
     function home() {
         location.href = "/"
     }
@@ -23,29 +19,46 @@
     function refresh() {
         location.reload()
     }
-
 </script>
 
-{{super()}}
-{% endblock %}
-
-
-{% block content %}
+{{super()}} {% endblock %} {% block content %}
+<div>
     <h1>谁是卧底</h1>
-    <br>
-    <div>房间代码:{{ room_id }}</div>
-    <div>玩家编号:{{ user_num }}</div>
-    <div>房间人数:{{ room_total }}</div>
-    <div>开始玩家:{{ start }}</div>
-    <div>你的词语:{{ word }}</div>
-    <br>
+</div>
 
-    <div class="btn-group-vertical btn-group-lg">
+
+<table class="table-condensed">
+    <tr>
+        <th>房间代码:</th>
+        <th>{{ room_id }}</th>
+    </tr>
+    <tr>
+        <th>玩家编号:</th>
+        <th>{{ user_num }}</th>
+    </tr>
+    <tr>
+        <th>房间人数:</th>
+        <th>{{ room_total }}</th>
+    </tr>
+    <tr>
+        <th>开始玩家:</th>
+        <th>{{ start }}</th>
+    </tr>
+    <tr>
+        <th>你的词语:</th>
+        <th>{{ word }}</th>
+    </tr>
+</table>
+<br>
+
+
+<div class="text-center">
+    <div class="btn-group-vertical btn-group-lg" style="min-width: 90%;">
         <button type="button" class="btn btn-primary" onclick="home()">主页</button>
         <button type="button" class="btn btn-primary" onclick="vote()">投票</button>
         <button type="button" class="btn btn-primary" onclick="change()">换词</button>
         <button type="button" class="btn btn-primary" onclick="refresh()">刷新</button>
     </div>
+</div>
 
-{{super()}}
-{% endblock %}
+{{super()}} {% endblock %}

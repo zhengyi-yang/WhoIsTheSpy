@@ -1,9 +1,5 @@
-{% extends "base.html" %}
-
-
-{% block scripts %}
+{% extends "base.html" %} {% block scripts %}
 <script language="javascript">
-
     function home() {
         location.href = "/"
     }
@@ -11,23 +7,19 @@
     function refresh() {
         location.reload()
     }
-
 </script>
 
-{{super()}}
-{% endblock %}
-
-{% block content %}
+{{super()}} {% endblock %} {% block content %}
+<div>
     <h1>谁是卧底</h1>
-    <br>
-    <div>错误：{{ msg }}</div>
-    <br>
-    <div>请尝试稍后<a href="javascript:refresh()">刷新</a>页面。</div>
-    <br>
-
-    <div class="btn-group-vertical btn-group-lg">
+</div>
+<div>错误：{{ msg }}</div>
+<br>
+<div>请尝试稍后<a href="javascript:refresh()">刷新</a>页面。</div>
+<br>
+<div class="text-center">
+    <div class="btn-group-vertical btn-group-lg" style="min-width: 90%;">
         <button type="button" class="btn btn-primary" onclick="home()">主页</button>
     </div>
-
-{{super()}}
-{% endblock %}
+</div>
+{{super()}} {% endblock %}
