@@ -1,8 +1,8 @@
 # 谁是卧底
 
 
-[Demo](https://sswd2.herokuapp.com) 
+[Demo](http://sswd.zhengyi.one) 
 
-[Mirror](https://sswd.herokuapp.com/)
+[Mirror](http://sswd2.zhengyi.one)
 
 [License](https://zhengyi.mit-license.org/@2017)
