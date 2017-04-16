@@ -193,6 +193,11 @@ def db_clean(table, max_records, delete_ratio=0.):
         table.commit()
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.html', msg='找不到该页面（Error 404）'), 404
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', nargs='?', dest='interface', default='0.0.0.0',
