@@ -82,10 +82,12 @@ def enter(room_id):
         if user_record:
             users.update(user_record[0], room=room_id,
                          num=user_num)
+            users.commit()
         else:
             users.insert(uid, room_id, user_num)
+            users.commit()
             db_clean(users, MAX_NUM_OF_USERS)
-        users.commit()
+
         user_record = users(uuid=uid)
 
     user_record = user_record[0]
@@ -125,8 +127,9 @@ def create(total):
             break
     rooms.insert(room_id, civ_word, spy_word, randint(1, total),
                  total, 0, randint(1, total))
-    db_clean(rooms, MAX_NUM_OF_ROOMS)
     rooms.commit()
+    db_clean(rooms, MAX_NUM_OF_ROOMS)
+
     url = url_for('enter', room_id=room_id)
     return redirect(url)
 
