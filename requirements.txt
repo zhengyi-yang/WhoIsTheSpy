@@ -1,5 +1,7 @@
 PyDbLite
+redis
 Flask
 flask-session
 flask-bootstrap
+flask-limiter
 gunicorn
